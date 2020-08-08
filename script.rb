@@ -11,6 +11,12 @@ class Board
     @board = [["", "", ""], ["", "", ""], ["", "", ""]]
   end
 
+  def show
+    puts "[ ] [ ] [ ]" 
+    puts "[ ] [ ] [ ]"  
+    puts "[ ] [ ] [ ]"  
+  end
+
   def winner
     if (
       winning_row? ||
@@ -69,9 +75,14 @@ end
 
 board = Board.new
 
-until board.winner?
+board.show
+puts "Where do you want to place your mark. Enter in [row,column] format. E.g. [1,2] means first row, second column."
+position = gets.chomp
+puts "putting your mark at #{position}"
 
-end
+# until board.winner?
+
+# end
 
 # create board
 # ask player 1 for input
