@@ -25,7 +25,26 @@ class TicTacToe
 
   def play
     loop do 
+      token_added = false
+      loop do
+        coords = ask_coordinates
+        valid_coords = validate_coords(coords)
+        if valid_coords do 
+          position_available = @board.check_position(coords)
+          if position_available do 
+            @board.add_token
+            token_added = true
+          else
+            puts "That position has already been taken. Add different coordinates."
+          end
+        else
+          puts "Invalid input. Please enter the coordinates in the [x,y] format."
+        end
 
+        break if token_added
+      end
+
+      switch_current_player
       break if game_over?
     end
   end
