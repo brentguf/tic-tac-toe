@@ -34,7 +34,7 @@ class TicTacToe
     @board.winner?(@current_player) || @board.draw?
   end
 
-  # initi alize
+  # initialize
     # board
     # players
     # current_player
@@ -70,6 +70,23 @@ class Board
       [nil, nil, nil], 
       [nil, nil, nil]
     ]
+  end
+
+  def render 
+    @board.each_with_index do |row, row_index|
+      to_display = ''
+    
+      row.each_with_index do |square, square_index|
+        str = (square || ' ')
+        if (square_index != row.length - 1)
+          str += ' | '
+        end
+        to_display += str
+      end
+    
+      puts to_display
+      puts "---------" if row_index != board.length - 1
+    end
   end
 
   def winner?(current_player)
