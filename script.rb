@@ -1,98 +1,123 @@
-# Board class
-  # initialize: create board
-  # winner?
-  # 
-# Player class
+# Set up the game (TicTacToe)
+#   Create a game board (Board)
+#   Create two players (Players)
+# Start loop (TicTacToe)
+#   Render the game board (Board)
+#   Ask for input from player 1 (Player)
+#     Until input is given and valid (Player)
+#   Put player's token on the board (Board)
+#     Check if spot is available (Board)
+#     Otherwise display error and ask for input again 
+#     Check if they won (TicTacToe)
+#       If they won
+#         Display message 
+#         Stop the loop
+#       Else
+#         Switch players (TicTacToe)
 
-class Board 
-  attr_accessor :board 
-
+class TicTacToe
   def initialize
-    @board = [["", "", ""], ["", "", ""], ["", "", ""]]
+    @board = Board.new
+    @player_1 = Player.new('Player 1', 'X')
+    @player_2 = Player.new('Player 2', 'O')
+    @current_player = @player_1
   end
 
-  def show
-    puts "[ ] [ ] [ ]" 
-    puts "[ ] [ ] [ ]"  
-    puts "[ ] [ ] [ ]"  
-  end
+  def play
+    loop do 
 
-  def winner
-    if (
-      winning_row? ||
-      winning_column? ||
-      winning_diagonal? 
-    ) 
-      true
+      break if game_over?
     end
-
-    false
   end
 
-  def winning_row?
-    winner = false
-    board.each do |row|
-      winning_row_o = row.all? { |square| square === "o"}
-      winning_row_x = row.all? { |square| square === "x"}
-
-      winner = true if winning_row_o || winning_row_x 
-    end
-    winner
+  def game_over?
+    @board.winner?(@current_player) || @board.draw?
   end
 
-  def winning_column?
-    winner = false
-    column_1 = [board[0][0], board[1][0], board[2][0]]
-    column_2 = [board[0][1], board[1][1], board[2][1]]
-    column_3 = [board[0][2], board[1][2], board[2][2]]
+  # initi alize
+    # board
+    # players
+    # current_player
+    # winner?(current_player)
+      # vertical
+      # diagonal
+      # horizontal
+
+  # play
+    # loop
+    # render board
+    # ask_input(current_player) or player.ask_input
+      # check validity
+        # format
+        # board spot is free?
+        # if valid and free => board.place_token
+          # winner?
+            # if yes display message and stop loop
+            # else switch players
+        # else ask input again
+
+  # switch_current_player
+end
+
+class Board
+  # initialize
+  # render
+  # place_token
+  # spot = free
+  def initialize
+    @board = [
+      [nil, nil, nil], 
+      [nil, nil, nil], 
+      [nil, nil, nil]
+    ]
+  end
+
+  def winner?(current_player)
+    vertical_winner?(current_player)
+    horizontal_winner?(current_player)
+    diagonal_winner?(current_player)
+  end
+
+  def draw?
+
+  end
+
+  def vertical_winner?(current_player)
+    column_1 = [@board[0][0], @board[1][0], @board[2][0]]
+    column_2 = [@board[0][1], @board[1][1], @board[2][1]]
+    column_3 = [@board[0][2], @board[1][2], @board[2][2]]
     columns = [column_1, column_2, column_3]
-    columns.each do |col|
-      winning_col_o = col.all? { |square| square === "o"}
-      winning_col_x = col.all? { |square| square === "x"}
 
-      winner = true if winning_row_o || winning_row_x 
+    columns.each do |column|
+      column.each {|square| square == current_player.token}
     end
-
-    winner
   end
 
-  def winning_diagonal?
-    winner = false
-    diagonal_1 = [board[0][0], board[1][1], board[2][2]]
-    diagonal_2 = [board[0][2], board[1][1], board[2][0]]
-    diagonals = [diagonal_1, diagonal_2]
-    
-    diagonals.each do |diagonal|
-      winning_diagonal_o = diagonal.all? { |square| square === "o"}
-      winning_diagonal_x = diagonal.all? { |square| square === "x"}
-
-      winner = true if winning_diagonal_o || winning_diagonal_x 
+  def horizontal_winner?(current_player)
+    @board.each do |row|
+      row.each {|square| square == current_player.token}
     end
+  end
 
-    winner
+  def diagonal_winner?(current_player)
+    diagonal_1 = [@board[0][0], @board[1][1], @board[2][2]]
+    diagonal_2 = [@board[2][0], @board[1][1], @board[0][2]]
+    diagonals = [diagonal_1, diagonal_2]
+
+    diagonals.each do |diagonal|
+      diagonal.each {|diagonal| diagonal == current_player.token}
+    end
   end
 end
 
-board = Board.new
+class Player
+  # initialize
+  # check input format validity
+  def initialize(name, token)
+    @name = name
+    @token = token
+  end
+end
 
-board.show
-puts "Where do you want to place your mark. Enter in [row,column] format. E.g. [1,2] means first row, second column."
-position = gets.chomp
-puts "putting your mark at #{position}"
-
-# until board.winner?
-
-# end
-
-# create board
-# ask player 1 for input
-  # ask to input in (row, column) format
-# check if spot is still available  
-# place input on board if available and show board with input
-  # otherwise ask for input again
-# check if we have a winner
-  # if we have a winner, display message
-# if not, ask player 2 for input
-# repeat all steps above
-# repeat until we have a winner
-  # congratulate winner
+game = TicTacToe.new
+game.start
