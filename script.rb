@@ -79,7 +79,9 @@ class Board
   end
 
   def draw?
-
+    @board.all? do |row|
+      row.none? {|square| square.nil?}
+    end
   end
 
   def vertical_winner?(current_player)
