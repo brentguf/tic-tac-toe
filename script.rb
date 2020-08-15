@@ -1,20 +1,3 @@
-# Set up the game (TicTacToe)
-#   Create a game board (Board)
-#   Create two players (Players)
-# Start loop (TicTacToe)
-#   Render the game board (Board)
-#   Ask for input from player 1 (Player)
-#     Until input is given and valid (Player)
-#   Put player's token on the board (Board)
-#     Check if spot is available (Board)
-#     Otherwise display error and ask for input again 
-#     Check if they won (TicTacToe)
-#       If they won
-#         Display message 
-#         Stop the loop
-#       Else
-#         Switch players (TicTacToe)
-
 class TicTacToe
   def initialize
     @board = Board.new
